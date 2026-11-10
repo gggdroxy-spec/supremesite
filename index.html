@@ -1,0 +1,1480 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+<title>SUPREME — FiveM External</title>
+<link rel="icon" href="supreme.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{
+ scroll-behavior:smooth;
+ -webkit-text-size-adjust:100%;
+ text-size-adjust:100%;
+}
+body{
+ background:#090909;
+ color:#f5f5f5;
+ font-family:Inter,sans-serif;
+ isolation:isolate;
+ -webkit-user-select:none;
+ user-select:none;
+ -webkit-touch-callout:none;
+}
+img,video{
+ -webkit-user-drag:none;
+ user-drag:none;
+}
+input,textarea,select,button,[contenteditable="true"]{
+ -webkit-user-select:text;
+ user-select:text;
+}
+a{text-decoration:none;color:inherit}
+
+/* VIDEO BACKGROUND */
+.background-video{
+ position:fixed;
+ inset:0;
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ z-index:-2;
+ pointer-events:none;
+}
+body::before{
+ content:"";
+ position:fixed;
+ inset:0;
+ background:rgba(5,5,5,.78);
+ z-index:-1;
+ pointer-events:none;
+}
+body>*:not(.background-video):not(.nav-wrap){position:relative}
+
+/* NAVIGATION */
+.nav-wrap{
+ position:fixed;
+ top:0;
+ left:0;
+ right:0;
+ width:100%;
+ z-index:9999;
+ padding:max(12px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) 12px max(20px,env(safe-area-inset-left));
+ pointer-events:none;
+}
+.nav-wrap nav{
+ pointer-events:auto;
+}
+nav{
+ max-width:1120px;
+ margin:auto;
+ height:58px;
+ padding:0 8px 0 22px;
+ background:rgba(16,16,16,.92);
+ border:1px solid #292929;
+ border-radius:40px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ backdrop-filter:blur(20px);
+ -webkit-backdrop-filter:blur(20px);
+ transition:background .3s,border-color .3s,box-shadow .3s;
+}
+nav.nav-solid{
+ background:rgba(10,10,10,.97);
+ border-color:#3a3a3a;
+ box-shadow:0 12px 40px rgba(0,0,0,.45);
+}
+.logo{
+ display:inline-flex;
+ align-items:center;
+ gap:10px;
+ font-size:18px;
+ font-weight:900;
+ letter-spacing:2px;
+ white-space:nowrap;
+}
+.logo-img{
+ width:38px;
+ height:38px;
+ object-fit:contain;
+ display:block;
+ flex-shrink:0;
+ filter:drop-shadow(0 0 12px rgba(255,48,48,.35));
+}
+.logo-text{line-height:1}
+.nav-links{display:flex;align-items:center;gap:5px}
+.nav-links a{
+ font-size:12px;
+ font-weight:700;
+ color:#858585;
+ padding:12px 13px;
+ border-radius:30px;
+ transition:.2s;
+ white-space:nowrap;
+}
+.nav-links a:hover,.nav-links a.active{background:#292929;color:white}
+.discord{
+ display:inline-flex;
+ align-items:center;
+ gap:9px;
+ background:#171717;
+ color:#a8a8a8;
+ padding:10px 18px;
+ border-radius:999px;
+ border:1px solid #2e2e2e;
+ font-size:12px;
+ font-weight:700;
+ white-space:nowrap;
+ transition:background .2s,color .2s,border-color .2s;
+}
+.discord:hover{
+ background:#222;
+ color:#fff;
+ border-color:#3a3a3a;
+}
+.discord svg{
+ width:20px;
+ height:20px;
+ flex-shrink:0;
+ fill:currentColor;
+}
+
+/* GENERAL */
+section{
+ padding:100px max(7%,env(safe-area-inset-left)) 100px max(7%,env(safe-area-inset-right));
+ scroll-margin-top:100px;
+}
+.hero{
+ min-height:800px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ padding:130px 20px 90px;
+ background:radial-gradient(ellipse at center,rgba(220,35,35,.12),transparent 60%);
+}
+.hero-inner{max-width:850px}
+.hero-logo{
+ width:min(130px,32vw);
+ height:auto;
+ margin:0 auto 28px;
+ display:block;
+ object-fit:contain;
+ filter:drop-shadow(0 12px 40px rgba(255,48,48,.45));
+}
+.status{
+ display:inline-flex;
+ align-items:center;
+ gap:9px;
+ padding:10px 17px;
+ border:1px solid #444;
+ border-radius:30px;
+ background:#ffffff08;
+ color:#aaa;
+ font-size:11px;
+ margin-bottom:35px;
+}
+.dot{
+ width:7px;
+ height:7px;
+ background:#ff3030;
+ border-radius:50%;
+ box-shadow:0 0 10px #ff3030;
+}
+h1{
+ font-size:clamp(65px,11vw,120px);
+ font-weight:900;
+ letter-spacing:-7px;
+ line-height:.95;
+}
+h1 span{
+ display:block;
+ color:transparent;
+ -webkit-text-stroke:1px #aaa;
+}
+.hero p{
+ max-width:530px;
+ margin:30px auto;
+ color:#aaa;
+ font-size:14px;
+ line-height:1.9;
+}
+.actions{
+ display:flex;
+ justify-content:center;
+ gap:12px;
+ flex-wrap:wrap;
+}
+.btn{
+ display:inline-block;
+ padding:15px 24px;
+ border-radius:8px;
+ background:white;
+ color:black;
+ font-size:11px;
+ font-weight:900;
+ transition:.2s;
+ border:none;
+ font-family:inherit;
+ cursor:pointer;
+ text-align:center;
+}
+.btn:hover{transform:translateY(-3px)}
+.btn.secondary{background:#151515;color:white;border:1px solid #333}
+.stats{
+ display:flex;
+ justify-content:center;
+ gap:55px;
+ margin-top:75px;
+ flex-wrap:wrap;
+}
+.stats strong{display:block;font-size:19px}
+.stats small{font-size:10px;color:#aaa;letter-spacing:1px}
+
+.heading{text-align:center;margin-bottom:50px}
+.eyebrow{
+ color:#ff3030;
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:3px;
+ margin-bottom:17px;
+}
+.heading h2{
+ font-size:clamp(32px,5vw,48px);
+ font-weight:900;
+ letter-spacing:-2px;
+}
+.heading p{
+ color:#aaa;
+ font-size:13px;
+ margin-top:13px;
+ line-height:1.8;
+}
+
+/* PRODUCTS */
+.product-categories{
+ max-width:1100px;
+ margin:0 auto 16px;
+ display:flex;
+ flex-wrap:wrap;
+ justify-content:center;
+ gap:10px;
+}
+.product-cat{
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:1px;
+ text-transform:capitalize;
+ padding:11px 20px;
+ border-radius:30px;
+ border:1px solid #292929;
+ background:rgba(18,18,18,.95);
+ color:#888;
+ cursor:pointer;
+ font-family:inherit;
+ transition:background .25s,border-color .25s,color .25s,transform .25s cubic-bezier(0.22,1,0.36,1);
+}
+.product-cat:hover{color:#ddd;border-color:#3a3a3a}
+.product-cat.is-active{
+ background:#ff3030;
+ border-color:#ff3030;
+ color:#fff;
+ transform:scale(1.03);
+}
+.product-category-name{
+ max-width:1100px;
+ margin:0 auto 22px;
+ font-size:15px;
+ font-weight:800;
+ letter-spacing:0.02em;
+ color:#f5f5f5;
+ text-transform:capitalize;
+ transition:opacity .35s ease,transform .35s cubic-bezier(0.22,1,0.36,1);
+}
+.product-category-name.is-changing{
+ opacity:0;
+ transform:translateY(-6px);
+}
+.product-panels-wrap{
+ display:grid;
+ grid-template-columns:1fr;
+ align-items:start;
+ max-width:1100px;
+ margin:0 auto;
+ overflow:visible;
+ padding:28px 22px 36px;
+ box-sizing:content-box;
+}
+.product-panels-wrap.is-switching{
+ overflow:hidden;
+}
+.product-panels-wrap>.product-panel{
+ grid-area:1/1;
+ width:100%;
+ overflow:visible;
+ opacity:0;
+ visibility:hidden;
+ transform:translateY(14px) scale(0.985);
+ pointer-events:none;
+ transition:
+  opacity .45s cubic-bezier(0.22,1,0.36,1),
+  transform .5s cubic-bezier(0.22,1,0.36,1),
+  visibility .45s;
+}
+.product-panels-wrap>.product-panel.is-active{
+ opacity:1;
+ visibility:visible;
+ transform:translateY(0) scale(1);
+ pointer-events:auto;
+ z-index:2;
+}
+.product-panels-wrap>.product-panel.is-leaving{
+ opacity:0;
+ visibility:visible;
+ transform:translateY(-10px) scale(0.985);
+ z-index:1;
+ pointer-events:none;
+}
+@media(prefers-reduced-motion:reduce){
+ .product-panels-wrap>.product-panel,
+ .product-category-name,
+ .product-cat{transition:none!important;transform:none!important}
+ .product-panels-wrap>.product-panel:not(.is-active){
+  display:none;
+ }
+ .product-panels-wrap>.product-panel.is-active{
+  opacity:1;
+  visibility:visible;
+ }
+}
+.products--solo{
+ grid-template-columns:minmax(280px,440px);
+ justify-content:center;
+ align-items:start;
+}
+.products,.features{
+ max-width:1100px;
+ margin:auto;
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:16px;
+ perspective:1400px;
+ overflow:visible;
+ padding:14px 10px 18px;
+}
+.card{
+ position:relative;
+ overflow:visible;
+ padding:30px;
+ border:1px solid #292929;
+ background:rgba(17,17,17,.88);
+ backdrop-filter:blur(15px);
+ border-radius:13px;
+ transform-style:preserve-3d;
+ transform-origin:center center;
+ backface-visibility:hidden;
+ will-change:transform;
+ transition:border-color .25s,box-shadow .25s;
+}
+.card:not(.is-tilted){
+ transition:transform .45s cubic-bezier(0.22,1,0.36,1),border-color .25s,box-shadow .25s;
+}
+.card.is-tilted{
+ transition:border-color .25s,box-shadow .25s;
+}
+.card>.card-head,.card>.price,.card>.line,.card>ul,.card>.btn,.card>p{
+ position:relative;
+ z-index:1;
+}
+.card::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ z-index:0;
+ border-radius:inherit;
+ background:rgba(17,17,17,.88);
+ background-image:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,48,48,.2),transparent 58%);
+ opacity:0;
+ transition:opacity .25s;
+ pointer-events:none;
+}
+.card::after{
+ content:"";
+ position:absolute;
+ inset:0;
+ z-index:0;
+ border-radius:inherit;
+ box-shadow:inset 0 0 0 1px rgba(41,41,41,.9);
+ pointer-events:none;
+}
+.card.is-tilted::after{
+ box-shadow:inset 0 0 0 1px rgba(214,43,43,.85);
+}
+.card.is-tilted::before{opacity:1}
+.card.is-tilted{
+ border-color:#d62b2b;
+ box-shadow:0 28px 55px rgba(0,0,0,.5),0 0 30px rgba(214,43,43,.12);
+}
+.card.popular{border-color:#b82020}
+.icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8;display:block}
+footer .logo-img{width:34px;height:34px}
+.terms-box h3 span svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8}
+.icon{width:45px;height:45px;border:0;background:transparent;color:#ff3030;display:grid;place-items:center;border-radius:0;font-size:20px;margin-bottom:23px}
+.card-head{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ margin-bottom:14px;
+}
+.card-head h3{
+ margin:0;
+ line-height:1.1;
+}
+.icon--logo{
+ width:45px;
+ height:45px;
+ margin-bottom:0;
+ flex-shrink:0;
+}
+.icon--logo img{
+ width:45px;
+ height:45px;
+ object-fit:contain;
+ display:block;
+ filter:drop-shadow(0 0 10px rgba(255,48,48,.3));
+}
+.card h3{font-size:19px;font-weight:800}
+.card p{font-size:12px;color:#aaa;line-height:1.9;margin-top:10px}
+.price{font-size:34px;font-weight:900;margin:24px 0}
+.price small{font-size:11px;color:#888;font-weight:500}
+.line{height:1px;background:#292929}
+ul{list-style:none;margin:20px 0}
+li{font-size:12px;color:#aaa;padding:9px 0}
+li:before{content:"<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 2.7 6.9L22 12l-7.3 3.1L12 22l-2.7-6.9L2 12l7.3-3.1Z"/></svg>";color:#ff3030;margin-right:10px}
+.card ul li{font-size:11px;line-height:1.55;padding:7px 0}
+.card .btn{width:100%;text-align:center;margin-top:8px}
+
+/* FEATURES */
+.features-section{
+ background:rgba(10,10,10,.78);
+ border-top:1px solid #292929;
+ border-bottom:1px solid #292929;
+ backdrop-filter:blur(12px);
+}
+.feature{
+ position:relative;
+ overflow:visible;
+ padding:30px;
+ border:1px solid #292929;
+ background:rgba(18,18,18,.9);
+ border-radius:12px;
+ transform-style:preserve-3d;
+ transform-origin:center center;
+ backface-visibility:hidden;
+ will-change:transform;
+ transition:border-color .25s,background .25s,box-shadow .25s;
+}
+.feature:not(.is-tilted){
+ transition:transform .45s cubic-bezier(0.22,1,0.36,1),border-color .25s,background .25s,box-shadow .25s;
+}
+.feature.is-tilted{
+ transition:border-color .25s,background .25s,box-shadow .25s;
+}
+.feature>h3,.feature>p,.feature>.icon{
+ position:relative;
+ z-index:1;
+}
+.feature::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ z-index:0;
+ border-radius:inherit;
+ background:rgba(18,18,18,.9);
+ background-image:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,48,48,.18),transparent 58%);
+ opacity:0;
+ transition:opacity .25s;
+ pointer-events:none;
+}
+.feature.is-tilted::before{opacity:1}
+.feature.is-tilted{
+ border-color:#d62b2b;
+ background:#1f1515;
+ box-shadow:0 28px 55px rgba(0,0,0,.5),0 0 28px rgba(214,43,43,.1);
+}
+.feature h3{font-size:15px;margin-bottom:12px}
+.feature p{font-size:12px;color:#aaa;line-height:1.9}
+
+/* ABOUT */
+.about{
+ max-width:1000px;
+ margin:auto;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:18px;
+}
+.about-card{
+ padding:35px;
+ background:rgba(17,17,17,.9);
+ border:1px solid #292929;
+ border-radius:12px;
+ backdrop-filter:blur(12px);
+}
+.about-card h3{font-size:22px;margin-bottom:15px}
+.about-card p{font-size:13px;color:#aaa;line-height:1.9}
+
+/* FAQ */
+.faq{max-width:750px;margin:auto}
+details.faq-item{
+ background:rgba(17,17,17,.92);
+ border:1px solid #292929;
+ border-radius:9px;
+ margin-bottom:12px;
+ overflow:hidden;
+ transition:
+  border-color .4s cubic-bezier(0.22,1,0.36,1),
+  box-shadow .4s cubic-bezier(0.22,1,0.36,1),
+  transform .4s cubic-bezier(0.22,1,0.36,1);
+}
+details.faq-item[open]:not(.is-collapsing){
+ border-color:rgba(255,48,48,.35);
+ box-shadow:0 12px 32px rgba(0,0,0,.35);
+ transform:translateY(-2px);
+}
+details.faq-item.is-opening{
+ transform:translateY(-2px) scale(1.008);
+}
+details.faq-item.is-collapsing{
+ border-color:#292929;
+ box-shadow:none;
+ transform:translateY(0);
+}
+details.faq-item summary{
+ padding:22px;
+ cursor:pointer;
+ font-size:13px;
+ font-weight:700;
+ list-style:none;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:16px;
+ transition:color .25s ease,background-color .35s ease;
+}
+details.faq-item summary::-webkit-details-marker{display:none}
+details.faq-item summary:active{opacity:.92}
+details.faq-item[open]:not(.is-collapsing) summary{color:#fff}
+details.faq-item summary:after{
+ content:"+";
+ color:#ff3030;
+ font-size:20px;
+ line-height:1;
+ flex-shrink:0;
+ transition:transform .45s cubic-bezier(0.22,1,0.36,1),color .25s ease;
+}
+details.faq-item[open]:not(.is-collapsing) summary:after{
+ transform:rotate(45deg);
+ color:#ff6060;
+}
+details.faq-item.is-collapsing summary:after{
+ transform:rotate(0deg);
+ color:#ff3030;
+}
+details.faq-item .faq-content{
+ display:grid;
+ grid-template-rows:0fr;
+ transition:grid-template-rows .48s cubic-bezier(0.22,1,0.36,1);
+}
+details.faq-item[open]:not(.is-collapsing) .faq-content{
+ grid-template-rows:1fr;
+}
+details.faq-item.is-collapsing .faq-content{
+ grid-template-rows:0fr;
+}
+details.faq-item .faq-content__inner{
+ overflow:hidden;
+ min-height:0;
+}
+details.faq-item p{
+ padding:0 22px 22px;
+ margin:0;
+ color:#aaa;
+ font-size:12px;
+ line-height:1.9;
+ opacity:0;
+ transform:translateY(-8px);
+ transition:
+  opacity .38s ease,
+  transform .48s cubic-bezier(0.22,1,0.36,1);
+}
+details.faq-item[open]:not(.is-collapsing) p{
+ opacity:1;
+ transform:translateY(0);
+ transition-delay:.08s;
+}
+details.faq-item.is-collapsing p{
+ opacity:0;
+ transform:translateY(-8px);
+ transition-delay:0s;
+}
+@media(prefers-reduced-motion:reduce){
+ details.faq-item,
+ details.faq-item summary:after,
+ details.faq-item .faq-content,
+ details.faq-item p{transition:none!important;transform:none!important;opacity:1}
+ details.faq-item .faq-content{grid-template-rows:1fr}
+ details.faq-item:not([open]) .faq-content{display:none}
+}
+
+/* DISCORD */
+.join{
+ text-align:center;
+ background:radial-gradient(ellipse at center,rgba(220,35,35,.16),transparent 60%);
+}
+.join h2{font-size:clamp(35px,6vw,55px);font-weight:900;letter-spacing:-3px}
+.join p{font-size:13px;color:#aaa;margin:20px auto 28px;line-height:1.9}
+
+/* TERMS */
+.terms-container{max-width:950px;margin:auto}
+.terms-intro{text-align:center;margin-bottom:45px}
+.terms-intro h2{font-size:clamp(32px,5vw,48px);font-weight:900;letter-spacing:-2px}
+.terms-intro p{font-size:13px;color:#aaa;margin-top:15px;line-height:1.8}
+.terms-box{
+ background:rgba(17,17,17,.94);
+ border:1px solid #292929;
+ border-radius:13px;
+ padding:35px;
+ margin-bottom:16px;
+ transition:.2s;
+}
+.terms-box:hover{border-color:#682828}
+.terms-box h3{
+ font-size:17px;
+ font-weight:800;
+ margin-bottom:20px;
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+.terms-box h3 span{width:32px;height:32px;display:grid;place-items:center;border:0;background:transparent;color:#ff5a5a;border-radius:0;font-size:14px}
+.terms-box p{font-size:13px;line-height:1.9;color:#aaa;margin-bottom:13px}
+.terms-box strong{color:#eee;font-weight:700}
+.terms-list{list-style:none;margin:0;padding:0}
+.terms-list li{
+ font-size:13px;
+ line-height:1.9;
+ color:#aaa;
+ padding:9px 0;
+ border-bottom:1px solid #252525;
+}
+.terms-list li:last-child{border:0}
+.terms-list li:before{content:"<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 2.7 6.9L22 12l-7.3 3.1L12 22l-2.7-6.9L2 12l7.3-3.1Z"/></svg>";color:#ff3030;margin-right:12px}
+.terms-notice{
+ margin-top:25px;
+ padding:20px 24px;
+ border:1px solid #552626;
+ background:rgba(33,16,16,.95);
+ border-radius:10px;
+ color:#aaa;
+ font-size:12px;
+ line-height:1.9;
+}
+.terms-notice strong{color:#ff5a5a}
+
+/* FOOTER */
+footer{
+ padding:35px 7%;
+ border-top:1px solid #292929;
+ background:rgba(8,8,8,.9);
+}
+.footer{
+ max-width:1100px;
+ margin:auto;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:20px;
+ flex-wrap:wrap;
+}
+.footer p{font-size:11px;color:#aaa;line-height:2}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links a{font-size:11px;color:#aaa}
+.footer-links a:hover{color:white}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(20px);transition:.7s}
+.reveal.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:850px){
+ nav{padding:0 12px}
+ .logo{font-size:15px}
+ .nav-links a{padding:10px 8px;font-size:10px}
+ .discord{padding:10px 13px;font-size:11px}
+ .products,.features{grid-template-columns:1fr}
+ .product-categories{padding:0 4px}
+ .product-panels-wrap{padding:18px 10px 28px}
+}
+
+@media(max-width:600px){
+ .nav-wrap{
+  top:8px;
+  padding:max(8px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 8px max(10px,env(safe-area-inset-left));
+ }
+ nav{
+  height:auto;
+  min-height:55px;
+  flex-wrap:wrap;
+  padding:12px;
+  gap:10px;
+  border-radius:15px;
+ }
+ .logo-text{display:none}
+ .logo-img{width:34px;height:34px}
+ .nav-links{
+  order:1;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  gap:4px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+ }
+ .nav-links::-webkit-scrollbar{display:none}
+ .nav-links a{
+  flex:1 1 auto;
+  text-align:center;
+  padding:12px 8px;
+  font-size:10px;
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+ }
+ .discord{
+  order:2;
+  width:100%;
+  justify-content:center;
+  min-height:44px;
+ }
+ .hero{
+  min-height:auto;
+  padding:120px 16px 72px;
+ }
+ .hero-logo{width:min(100px,28vw);margin-bottom:22px}
+ .hero p{font-size:13px;line-height:1.75;padding:0 4px}
+ .actions{
+  flex-direction:column;
+  align-items:stretch;
+  width:100%;
+  max-width:340px;
+  margin-left:auto;
+  margin-right:auto;
+  gap:10px;
+ }
+ .actions .btn{width:100%;min-height:48px;display:flex;align-items:center;justify-content:center}
+ h1{letter-spacing:-4px;line-height:.92}
+ section{padding:72px max(5%,env(safe-area-inset-left)) 72px max(5%,env(safe-area-inset-right))}
+ .heading{margin-bottom:36px}
+ .heading p{font-size:12px;padding:0 8px}
+ .products,.features,.about{grid-template-columns:1fr}
+ .products{padding:6px 2px 10px;gap:12px}
+ .card{padding:22px 18px}
+ .price{font-size:30px;margin:18px 0}
+ .product-categories{
+  width:100%;
+  gap:8px;
+  margin-bottom:14px;
+ }
+ .product-cat{
+  flex:1 1 calc(50% - 4px);
+  min-height:46px;
+  padding:12px 10px;
+  font-size:10px;
+ }
+ .product-category-name{
+  font-size:14px;
+  margin-bottom:16px;
+  padding:0 8px;
+ }
+ .product-panels-wrap{padding:12px 6px 20px}
+ .stats{gap:22px;margin-top:48px}
+ .stats strong{font-size:17px}
+ .faq{max-width:100%}
+ details.faq-item summary{padding:18px 16px;font-size:12px}
+ details.faq-item p{padding:0 16px 18px;font-size:12px}
+ .terms-box{padding:22px 18px}
+ .terms-intro p{padding:0 8px}
+ .footer{
+  flex-direction:column;
+  align-items:flex-start;
+  padding-bottom:max(24px,env(safe-area-inset-bottom));
+ }
+ .footer-links{gap:14px}
+}
+
+@media(max-width:400px){
+ h1{font-size:clamp(46px,13vw,64px);letter-spacing:-3px}
+ .heading h2{letter-spacing:-1px}
+ .product-cat{flex:1 1 100%}
+ .status{font-size:10px;padding:8px 14px}
+}
+
+@media(hover:none) and (pointer:coarse){
+ .card,.feature{transform:none!important}
+ .card.is-tilted,.feature.is-tilted{box-shadow:none;border-color:#292929}
+ .card.is-tilted::before,.feature.is-tilted::before{opacity:0}
+ .card::after{box-shadow:inset 0 0 0 1px rgba(41,41,41,.9)}
+}
+
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;transition:none!important}
+ .reveal{opacity:1;transform:none}
+ .card,.feature{transform:none!important}
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND VIDEO: AUTOPLAY + INFINITE LOOP -->
+<video
+ class="background-video"
+ autoplay
+ muted
+ loop
+ playsinline
+ preload="auto"
+>
+ <source src="backround.mp4" type="video/mp4">
+</video>
+
+<!-- NAVIGATION -->
+<div class="nav-wrap">
+<nav>
+<a href="#home" class="logo"><img src="supreme.png" alt="" class="logo-img" width="38" height="38"><span class="logo-text">SUPREME</span></a>
+
+<div class="nav-links">
+<a href="#home" class="active">Home</a>
+<a href="#products">Products</a>
+<a href="#faq">FAQ</a>
+<a href="#terms">Terms & Privacy</a>
+</div>
+
+<a href="https://discord.gg/supremebypass" class="discord" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+<span>Discord</span>
+</a>
+</nav>
+</div>
+
+<!-- HOME -->
+<header class="hero" id="home">
+<div class="hero-inner">
+<img src="supreme.png" alt="Supreme" class="hero-logo reveal" width="130" height="130">
+<div class="status"><span class="dot"></span> OFFICIAL SUPREME BYPASS WEBSITE </div>
+
+<h1>SUPREME<span>EXTERNAL.</span></h1>
+
+<p>
+A premium FiveM external software experience.
+Explore our products, discover our features and
+join the SUPREME community.
+</p>
+
+<div class="actions">
+<a href="#products" class="btn">EXPLORE PRODUCTS ↗</a>
+<a href="#faq" class="btn secondary">VIEW FAQ</a>
+</div>
+
+<div class="stats">
+<div><strong>FIVEM</strong><small>PLATFORM</small></div>
+<div><strong>EXTERNAL</strong><small>SOFTWARE</small></div>
+<div><strong>SUPREME</strong><small>EXPERIENCE</small></div>
+</div>
+</div>
+</header>
+
+<!-- PRODUCTS -->
+<section id="products">
+<div class="heading reveal">
+<div class="eyebrow">OUR COLLECTION</div>
+<h2>CHOOSE YOUR ACCESS.</h2>
+<p>Browse by category and choose your license.</p>
+</div>
+
+<div class="product-categories reveal" role="tablist" aria-label="Bypass categories">
+<button type="button" class="product-cat is-active" role="tab" aria-selected="true" data-category="public">Public bypass</button>
+<button type="button" class="product-cat" role="tab" aria-selected="false" data-category="custom">Custom bypass</button>
+</div>
+<p class="product-category-name reveal" id="productCategoryName">Public bypass</p>
+
+<div class="product-panels-wrap" id="productPanelsWrap">
+<div class="product-panel is-active" id="product-panel-public" role="tabpanel">
+<div class="products" id="products-public">
+
+<div class="card reveal">
+<div class="card-head">
+<div class="icon icon--logo"><img src="supreme.png" alt="Public bypass" width="45" height="45"></div>
+<h3>1 MONTH</h3>
+</div>
+<div class="price">€39,99</div>
+<div class="line"></div>
+<ul>
+<li>POV Bypass</li>
+<li>Bypassing all types of PC checks and scanners</li>
+<li>Compatible with Windows 10 &amp; Windows 11</li>
+<li>Windows Defender bypass</li>
+<li>Undetected cheat features</li>
+<li>Fully customized security</li>
+<li>0/72 VirusTotal</li>
+<li>UserMode bypass</li>
+</ul>
+<button type="button" class="btn secondary checkout-go" data-plan-id="plan-1m">GET 1 MONTH ↗</button>
+</div>
+
+<div class="card popular reveal">
+<div class="card-head">
+<div class="icon icon--logo"><img src="supreme.png" alt="Public bypass" width="45" height="45"></div>
+<h3>3 MONTHS</h3>
+</div>
+<div class="price">€59,99</div>
+<div class="line"></div>
+<ul>
+<li>POV Bypass</li>
+<li>Bypassing all types of PC checks and scanners</li>
+<li>Compatible with Windows 10 &amp; Windows 11</li>
+<li>Windows Defender bypass</li>
+<li>Undetected cheat features</li>
+<li>Fully customized security</li>
+<li>0/72 VirusTotal</li>
+<li>UserMode bypass</li>
+</ul>
+<button type="button" class="btn checkout-go" data-plan-id="plan-3m">GET 3 MONTHS ↗</button>
+</div>
+
+<div class="card reveal">
+<div class="card-head">
+<div class="icon icon--logo"><img src="supreme.png" alt="Public bypass" width="45" height="45"></div>
+<h3>LIFETIME</h3>
+</div>
+<div class="price">€99,99</div>
+<div class="line"></div>
+<ul>
+<li>POV Bypass</li>
+<li>Bypassing all types of PC checks and scanners</li>
+<li>Compatible with Windows 10 &amp; Windows 11</li>
+<li>Windows Defender bypass</li>
+<li>Undetected cheat features</li>
+<li>Fully customized security</li>
+<li>0/72 VirusTotal</li>
+<li>UserMode bypass</li>
+</ul>
+<button type="button" class="btn secondary checkout-go" data-plan-id="plan-life">GET LIFETIME ↗</button>
+</div>
+
+</div>
+</div>
+
+<div class="product-panel" id="product-panel-custom" role="tabpanel">
+<div class="products products--solo" id="products-custom">
+
+<div class="card popular reveal">
+<div class="card-head">
+<div class="icon icon--logo"><img src="supreme.png" alt="Custom bypass" width="45" height="45"></div>
+<h3>Custom bypass</h3>
+</div>
+<div class="price">€179,99</div>
+<div class="line"></div>
+<ul>
+<li>1/1 Loader</li>
+<li>Custom bypass method</li>
+<li>POV Bypass</li>
+<li>Bypassing all types of PC checks and scanners (better bypass than public)</li>
+<li>Compatible with Windows 10 &amp; Windows 11</li>
+<li>Windows Defender bypass</li>
+<li>Undetected cheat features</li>
+<li>Fully customized security</li>
+<li>0/72 VirusTotal</li>
+<li>UserMode bypass</li>
+<li>Bypass everything injected</li>
+</ul>
+<button type="button" class="btn checkout-go" data-plan-id="plan-custom">GET CUSTOM ↗</button>
+</div>
+
+</div>
+</div>
+</div>
+
+</section>
+
+<!-- FEATURES -->
+<section class="features-section">
+<div class="heading reveal">
+<div class="eyebrow">SOFTWARE FEATURES</div>
+<h2>THE SUPREME EXPERIENCE.</h2>
+<p>Product functionality, configuration and customer experience.</p>
+</div>
+
+<div class="features">
+<div class="feature reveal">
+<div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 14.2 9.8 21.2 12 14.2 14.2 12 21.2 9.8 14.2 2.8 12 9.8 9.8Z"/></svg></div>
+<h3>External Interface</h3>
+<p>A dedicated interface for organizing available software controls and settings.</p>
+</div>
+
+<div class="feature reveal">
+<div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10M7 12h7M7 16h4"/></svg></div>
+<h3>Bypass Information</h3>
+<p>Centralized product documentation covering supported configurations and published compatibility information.</p>
+</div>
+
+<div class="feature reveal">
+<div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></div>
+<h3>FiveM Compatibility</h3>
+<p>Product-specific compatibility details and supported environment information.</p>
+</div>
+
+<div class="feature reveal">
+<div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/></svg></div>
+<h3>Regular Updates</h3>
+<p>Release announcements, product improvements and compatibility updates.</p>
+</div>
+
+<div class="feature reveal">
+<div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 9 10-9 10L3 12Z"/><path d="M12 7v10M7 12h10"/></svg></div>
+<h3>Customer Support</h3>
+<p>Assistance with licenses, installation, configuration and product questions.</p>
+</div>
+
+<div class="feature reveal">
+<div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/><circle cx="8" cy="7" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="10" cy="17" r="2"/></svg></div>
+<h3>Easy Setup</h3>
+<p>Organized installation instructions and straightforward configuration.</p>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+<div class="heading reveal">
+<div class="eyebrow">HELP CENTER</div>
+<h2>FREQUENTLY ASKED.</h2>
+<p>Everything you need to know about SUPREME.</p>
+</div>
+
+<div class="faq">
+<details class="faq-item">
+<summary>What is SUPREME?</summary>
+<div class="faq-content"><div class="faq-content__inner">
+<p>SUPREME is a FiveM-focused external software brand. Product information and supported functionality are published with each package.</p>
+</div></div>
+</details>
+
+<details class="faq-item">
+<summary>What is a FiveM external bypass?</summary>
+<div class="faq-content"><div class="faq-content__inner">
+<p>It refers to external software marketed around compatibility with FiveM security systems. Actual functionality and compatibility must be verified against the specific product documentation.</p>
+</div></div>
+</details>
+
+<details class="faq-item">
+<summary>How do I purchase a license?</summary>
+<div class="faq-content"><div class="faq-content__inner">
+<p>Visit our official Discord for current availability, pricing and purchasing information.</p>
+</div></div>
+</details>
+
+<details class="faq-item">
+<summary>How do I receive updates?</summary>
+<div class="faq-content"><div class="faq-content__inner">
+<p>Product release information and update announcements are published through our community.</p>
+</div></div>
+</details>
+
+<details class="faq-item">
+<summary>Where can I get support?</summary>
+<div class="faq-content"><div class="faq-content__inner">
+<p>Join the SUPREME Discord and contact the support team.</p>
+</div></div>
+</details>
+</div>
+</section>
+
+<!-- TERMS & PRIVACY -->
+<section class="features-section" id="terms">
+<div class="terms-container">
+
+<div class="terms-intro reveal">
+<div class="eyebrow">LEGAL INFORMATION</div>
+<h2>TERMS & PRIVACY.</h2>
+<p>Please read our Terms of Service and Software License Agreement carefully.</p>
+</div>
+
+<div class="terms-box reveal">
+<h3><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8M12 3v18M5 7h14M6 7l-3 7h6L6 7Zm12 0-3 7h6l-3-7Z"/></svg></span> Terms of Service</h3>
+<p>
+<strong>Terms of Service & Software License Agreement</strong><br>
+By purchasing and using our software, you automatically agree to the following terms and conditions:
+</p>
+</div>
+
+<div class="terms-box reveal">
+<h3><span>01</span> License Grant & Restrictions</h3>
+<ul class="terms-list">
+<li><strong>Personal Use:</strong> You are granted a personal, non-transferable license to use the software.</li>
+<li><strong>No Distribution:</strong> You may not share, lease, or sell your license. Any attempt to do so will result in the immediate revocation of your license.</li>
+</ul>
+</div>
+
+<div class="terms-box reveal">
+<h3><span>02</span> Software Integrity & Misuse</h3>
+<ul class="terms-list">
+<li><strong>Reverse Engineering:</strong> Any suspected reverse engineering, cracking, tampering, or unauthorized distribution of our software will result in a permanent blacklist from our services.</li>
+<li><strong>Affiliation Restrictions:</strong> If you are found to be related to, employed by, or associated with any other cheat software, anti-cheat service, or Roleplay (RP) server in any way or form, you will be blacklisted.</li>
+</ul>
+</div>
+
+<div class="terms-box reveal">
+<h3><span>03</span> Data & Privacy</h3>
+<ul class="terms-list">
+<li><strong>Security Logging:</strong> We collect minimal data necessary solely for security verification and system integrity. Your data is handled securely and is never sold.</li>
+</ul>
+</div>
+
+<div class="terms-box reveal">
+<h3><span>04</span> Refund & Sales Policy</h3>
+<ul class="terms-list">
+<li><strong>All Sales Final:</strong> No refunds will be issued under any circumstances.</li>
+<li><strong>Authorized Sales:</strong> We do not use any third-party resellers. The only authorized way to purchase a license is through our official Discord ticket system.</li>
+</ul>
+</div>
+
+<div class="terms-box reveal">
+<h3><span>05</span> Termination</h3>
+<ul class="terms-list">
+<li><strong>Violations:</strong> Violating any part of these terms will lead to the immediate termination of your license and a permanent ban from using our services.</li>
+</ul>
+</div>
+
+<div class="terms-notice reveal">
+<strong>SUPREME NOTICE</strong><br>
+By purchasing, accessing, or using SUPREME software, you acknowledge that you have read and agreed to these terms. These terms are subject to applicable consumer protection and data protection laws.
+</div>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer">
+
+<div>
+<div class="logo"><img src="supreme.png" alt="" class="logo-img" width="34" height="34"><span class="logo-text">SUPREME</span></div>
+<p>FiveM External Software.<br>© 2026 SUPREME. All rights reserved.</p>
+</div>
+
+<div class="footer-links">
+<a href="#home">Home</a>
+<a href="#products">Products</a>
+<a href="#faq">FAQ</a>
+<a href="#terms">Terms & Privacy</a>
+<a href="https://discord.gg/supremebypass">Discord ↗</a>
+</div>
+
+</div>
+</footer>
+
+<script src="store.js"></script>
+<script>
+// Disable mouse / touch copy & drag-select (form fields still selectable)
+(function(){
+ const allow=/^(INPUT|TEXTAREA|SELECT)$/;
+ function blocked(t){
+  if(!t)return true;
+  if(allow.test(t.nodeName))return false;
+  if(t.closest&&t.closest('[contenteditable="true"]'))return false;
+  return true;
+ }
+ document.addEventListener('copy',e=>{if(blocked(e.target))e.preventDefault();});
+ document.addEventListener('cut',e=>{if(blocked(e.target))e.preventDefault();});
+ document.addEventListener('contextmenu',e=>{if(blocked(e.target))e.preventDefault();});
+ document.addEventListener('selectstart',e=>{if(blocked(e.target))e.preventDefault();});
+ document.addEventListener('dragstart',e=>{
+  if(e.target&&e.target.tagName==='IMG')e.preventDefault();
+ });
+})();
+
+// REVEAL ANIMATIONS
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+  if(entry.isIntersecting){
+   entry.target.classList.add('show');
+   observer.unobserve(entry.target);
+  }
+ });
+},{threshold:.12});
+
+document.querySelectorAll('.reveal').forEach(el=>{
+ observer.observe(el);
+});
+
+// ACTIVE NAVIGATION
+const links=document.querySelectorAll('.nav-links a');
+
+const sections=document.querySelectorAll(
+ '#home,#products,#faq,#terms'
+);
+
+const sectionObserver=new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+  if(entry.isIntersecting){
+   links.forEach(link=>{
+    link.classList.toggle(
+     'active',
+     link.getAttribute('href')==='#'+entry.target.id
+    );
+   });
+  }
+ });
+},{rootMargin:'-30% 0px -60% 0px'});
+
+sections.forEach(section=>{
+ sectionObserver.observe(section);
+});
+
+// STICKY NAV — always visible while scrolling
+(function(){
+ const bar=document.querySelector('.nav-wrap nav');
+ if(!bar)return;
+ const onScroll=()=>{
+  bar.classList.toggle('nav-solid',window.scrollY>24);
+ };
+ onScroll();
+ window.addEventListener('scroll',onScroll,{passive:true});
+})();
+
+// VIDEO AUTOPLAY FALLBACK
+const video=document.querySelector('.background-video');
+
+video.muted=true;
+
+video.play().catch(()=>{
+ console.log('Video autoplay requires browser permission.');
+});
+
+// FAQ — animated open / close
+(function(){
+ const items=[...document.querySelectorAll('details.faq-item')];
+ if(!items.length)return;
+ const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const ANIM_MS=520;
+
+ function closeItem(details){
+  if(!details.open)return Promise.resolve();
+  if(reduceMotion){
+   details.open=false;
+   details.classList.remove('is-opening','is-collapsing');
+   return Promise.resolve();
+  }
+  return new Promise(resolve=>{
+   const content=details.querySelector('.faq-content');
+   let settled=false;
+   const done=()=>{
+    if(settled)return;
+    settled=true;
+    if(content)content.removeEventListener('transitionend',onEnd);
+    details.open=false;
+    details.classList.remove('is-collapsing','is-opening');
+    resolve();
+   };
+   const onEnd=e=>{
+    if(e.target!==content)return;
+    if(e.propertyName==='grid-template-rows')done();
+   };
+   details.classList.add('is-collapsing');
+   if(content)content.addEventListener('transitionend',onEnd);
+   window.setTimeout(done,ANIM_MS);
+  });
+ }
+
+ async function openItem(details){
+  if(reduceMotion){
+   details.open=true;
+   return;
+  }
+  for(const other of items){
+   if(other!==details&&other.open)await closeItem(other);
+  }
+  details.classList.remove('is-collapsing');
+  details.open=true;
+  details.classList.add('is-opening');
+  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+  window.setTimeout(()=>details.classList.remove('is-opening'),ANIM_MS);
+ }
+
+ items.forEach(details=>{
+  const summary=details.querySelector('summary');
+  if(!summary)return;
+  let busy=false;
+  summary.addEventListener('click',e=>{
+   e.preventDefault();
+   if(busy)return;
+   const closing=details.open&&!details.classList.contains('is-collapsing');
+   const opening=!details.open;
+   if(!closing&&!opening)return;
+   busy=true;
+   const run=closing?closeItem(details):openItem(details);
+   Promise.resolve(run).finally(()=>{busy=false;});
+  });
+  summary.addEventListener('keydown',e=>{
+   if(e.key!=='Enter'&&e.key!==' ')return;
+   e.preventDefault();
+   summary.click();
+  });
+ });
+})();
+
+// 3D TILT — products + features (desktop pointer only)
+(function(){
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ if(window.matchMedia('(hover: none) and (pointer: coarse)').matches)return;
+ function tiltCard(card,maxDeg){
+  let raf=0;
+  let last=null;
+  const apply=()=>{
+   raf=0;
+   if(!last)return;
+   const e=last;
+   const r=card.getBoundingClientRect();
+   const x=(e.clientX-r.left)/r.width;
+   const y=(e.clientY-r.top)/r.height;
+   card.style.setProperty('--mx',(x*100)+'%');
+   card.style.setProperty('--my',(y*100)+'%');
+   const rx=(y-.5)*-maxDeg;
+   const ry=(x-.5)*maxDeg;
+   card.classList.add('is-tilted');
+   card.style.transform='perspective(900px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateZ(14px) scale(1.03)';
+  };
+  card.addEventListener('mousemove',e=>{
+   last=e;
+   if(!raf)raf=requestAnimationFrame(apply);
+  });
+  card.addEventListener('mouseleave',()=>{
+   last=null;
+   if(raf){cancelAnimationFrame(raf);raf=0;}
+   card.classList.remove('is-tilted');
+   card.style.transform='';
+  });
+ }
+ document.querySelectorAll('.products .card').forEach(c=>tiltCard(c,18));
+ document.querySelectorAll('.features .feature').forEach(c=>tiltCard(c,14));
+})();
+
+document.querySelectorAll('.checkout-go').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+  const id=btn.dataset.planId;
+  if(!id||!SupremeStore.findProduct(id))return;
+  SupremeStore.saveCart([{id,qty:1}]);
+  window.location.href='checkout.html';
+ });
+});
+
+// PRODUCT CATEGORIES
+(function(){
+ const tabs=document.querySelectorAll('.product-cat');
+ const nameEl=document.getElementById('productCategoryName');
+ const wrap=document.getElementById('productPanelsWrap');
+ const panelPublic=document.getElementById('product-panel-public');
+ const panelCustom=document.getElementById('product-panel-custom');
+ if(!tabs.length||!panelPublic||!panelCustom)return;
+
+ const labels={public:'Public bypass',custom:'Custom bypass'};
+ const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const swapMs=reduceMotion?0:480;
+ let current='public';
+
+ function syncWrapHeight(){
+  if(!wrap)return;
+  const h=Math.max(panelPublic.scrollHeight,panelCustom.scrollHeight);
+  wrap.style.minHeight=(h+56)+'px';
+ }
+
+ window.addEventListener('resize',syncWrapHeight);
+ window.addEventListener('load',syncWrapHeight);
+
+ function setLabel(key,animate){
+  if(!nameEl)return;
+  const text=labels[key]||key;
+  if(!animate||reduceMotion){
+   nameEl.textContent=text;
+   nameEl.classList.remove('is-changing');
+   return;
+  }
+  nameEl.classList.add('is-changing');
+  window.setTimeout(()=>{
+   nameEl.textContent=text;
+   nameEl.classList.remove('is-changing');
+  },180);
+ }
+
+ function showCategory(key,animate=true){
+  if(key===current&&animate)return;
+  const isPublic=key==='public';
+  const next=isPublic?panelPublic:panelCustom;
+  const prev=isPublic?panelCustom:panelPublic;
+
+  tabs.forEach(t=>{
+   const on=t.dataset.category===key;
+   t.classList.toggle('is-active',on);
+   t.setAttribute('aria-selected',String(on));
+  });
+  setLabel(key,animate);
+
+  if(!animate||reduceMotion){
+   panelPublic.classList.toggle('is-active',isPublic);
+   panelCustom.classList.toggle('is-active',!isPublic);
+   panelPublic.classList.remove('is-leaving');
+   panelCustom.classList.remove('is-leaving');
+   current=key;
+   syncWrapHeight();
+   return;
+  }
+
+  if(next.classList.contains('is-active'))return;
+
+  wrap.classList.add('is-switching');
+  window.setTimeout(()=>wrap.classList.remove('is-switching'),swapMs+100);
+
+  prev.classList.remove('is-active');
+  prev.classList.add('is-leaving');
+  window.setTimeout(()=>prev.classList.remove('is-leaving'),swapMs);
+
+  window.setTimeout(()=>{
+   next.classList.add('is-active');
+   current=key;
+   syncWrapHeight();
+  },90);
+ }
+
+ tabs.forEach(tab=>{
+  tab.addEventListener('click',()=>{
+   const key=tab.dataset.category;
+   if(key)showCategory(key);
+  });
+ });
+
+ showCategory('public',false);
+ syncWrapHeight();
+ requestAnimationFrame(syncWrapHeight);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#090909" />
+  <meta name="description" content="Secure checkout — SUPREME" />
+  <title>Checkout | SUPREME</title>
+  <link rel="icon" href="supreme.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="checkout.css" />
+</head>
+<body class="page-checkout">
+  <header class="site-header site-header--minimal">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="SUPREME home">
+        <img src="supreme.png" alt="" width="36" height="36" />
+        <span>SUPREME</span>
+      </a>
+      <a href="index.html#products" class="checkout-back-link">← Continue shopping</a>
+    </div>
+  </header>
+
+  <main class="checkout-main" id="main">
+    <div class="checkout-empty" id="checkoutEmpty" hidden>
+      <h1>No plan selected</h1>
+      <p>Choose a license on the store page first.</p>
+      <a href="index.html#products" class="btn btn-primary">View plans</a>
+    </div>
+
+    <div class="checkout-success" id="checkoutSuccess" hidden>
+      <div class="checkout-success__card">
+        <p class="hero-eyebrow">Order confirmed</p>
+        <h1>Thank you</h1>
+        <p class="checkout-success__order">Order <strong id="orderNumber"></strong></p>
+        <p id="successEmail" class="section-sub"></p>
+        <p class="section-sub">Demo checkout — finish delivery via your Discord ticket system.</p>
+        <a href="index.html" class="btn btn-primary">Back to store</a>
+      </div>
+    </div>
+
+    <h1 class="checkout-title" id="checkoutTitle">Checkout</h1>
+
+    <div class="checkout-layout" id="checkoutLayout">
+      <form class="checkout-form" id="checkoutForm" novalidate>
+        <section class="checkout-block" aria-labelledby="contact-heading">
+          <h2 id="contact-heading">Contact</h2>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" id="fieldEmail" required autocomplete="email" placeholder="you@email.com" />
+          </label>
+          <label class="field">
+            <span>Discord username</span>
+            <input type="text" name="discord" required autocomplete="username" placeholder="username" />
+          </label>
+        </section>
+
+        <section class="checkout-block payment-block" aria-labelledby="pay-heading">
+          <h2 class="payment-method-title" id="pay-heading">Payment method</h2>
+
+          <div class="pay-methods" role="radiogroup" aria-labelledby="pay-heading">
+            <label class="pay-method is-selected">
+              <input type="radio" name="payMethod" value="cards" checked />
+              <span class="pay-method__radio" aria-hidden="true"></span>
+              <span class="pay-method__label">Cards</span>
+              <span class="pay-method__badges" aria-hidden="true">
+                <span class="pay-badge pay-badge--visa">VISA</span>
+                <span class="pay-badge pay-badge--apple">
+                  <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M16.5 12.4c.02 2.33 2.05 3.12 2.07 3.13-.02.05-.32 1.1-.97 2.18-1.21 1.98-2.45 1.98-3.2 2-1.25.08-2.23-.74-2.93-.74-.72 0-1.45.73-2.38.71-.97-.02-1.91-.56-2.42-1.44-1.52-2.63-1.35-6.58.03-8.28.67-.82 1.58-1.28 2.47-1.28.92.02 1.62.44 2.43.44.77 0 1.22-.44 2.33-.44.81 0 1.68.33 2.28 1.14-2 .97-1.67 3.38.03 4.24zM14.78 4.2c.43-.52.72-1.24.64-1.95-.62.02-1.37.41-1.82.93-.4.46-.75 1.2-.65 1.9.68.05 1.38-.34 1.83-.88z"/></svg>
+                  Pay
+                </span>
+                <span class="pay-badge pay-badge--google">
+                  <svg class="pay-badge__g" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                    <path fill="#4285F4" d="M22 12.2c0-.7-.06-1.22-.2-1.76H12v3.2h5.7c-.12.9-.76 2.24-2.18 3.14l-.02.13 3.16 2.45.22.02c2.02-1.86 3.18-4.6 3.18-7.84z"/>
+                    <path fill="#34A853" d="M12 22c2.97 0 5.46-.98 7.28-2.66l-3.47-2.68c-.93.64-2.18 1.08-3.81 1.08-2.92 0-5.38-1.97-6.26-4.64l-.13.01-3.4 2.63-.04.12C3.96 19.54 7.7 22 12 22z"/>
+                    <path fill="#FBBC05" d="M5.74 13.1c-.22-.64-.35-1.32-.35-2.02s.13-1.38.33-2.02l-.01-.14-3.44-2.67-.11.05C1.36 8.3 1 10.1 1 12s.36 3.7 1.16 5.74l3.58-2.64z"/>
+                    <path fill="#EA4335" d="M12 5.56c2.07 0 3.47.8 4.27 1.47l3.12-3.04C17.43 2.5 15 1.5 12 1.5 7.7 1.5 3.96 3.96 2.16 7.5l3.58 2.64C6.62 7.53 9.08 5.56 12 5.56z"/>
+                  </svg>
+                  Pay
+                </span>
+              </span>
+            </label>
+
+            <label class="pay-method">
+              <input type="radio" name="payMethod" value="crypto" />
+              <span class="pay-method__radio" aria-hidden="true"></span>
+              <span class="pay-method__label">Crypto</span>
+              <span class="pay-method__badges" aria-hidden="true">
+                <span class="pay-coin pay-coin--btc" title="Bitcoin">₿</span>
+                <span class="pay-coin pay-coin--eth" title="Ethereum">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="#fff" d="M12 1.5l.1.3v7.1l-.1.3-5.5-3.3 5.5-4.4zm0 8.7l.1.4 5.5 3.3-5.5 3.3-.1.3V10.2zm-6.2 4.8 5.6 3.3v4.5l-5.6-7.8zm6.2 7.8v-4.5l5.6-3.3-5.6 7.8zm6.2-9.9-5.6-3.3V4.3l5.6 7.7zM5.8 4.3l5.6 4.4V2.1l-5.6 2.2z" opacity=".95"/></svg>
+                </span>
+                <span class="pay-coin pay-coin--ltc" title="Litecoin">Ł</span>
+              </span>
+            </label>
+          </div>
+
+          <p class="payment-disclaimer">
+            Card payments are processed by Stripe; crypto by Paymento. SUPREME never sees your card or wallet details.
+          </p>
+
+          <div class="pay-panels">
+            <div class="pay-panel is-active" id="payPanelCards" role="region" aria-live="polite">
+              <div class="pay-secure pay-secure--stripe">
+                <div class="pay-secure__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M12 1a5 5 0 00-5 5v4H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm0 2a3 3 0 013 3v4H9V6a3 3 0 013-3zm-3 9h6v6H9v-6z"/></svg>
+                </div>
+                <h3>Secure payment with Stripe</h3>
+                <p>
+                  Your card is entered on Stripe’s encrypted checkout page. SUPREME never stores or sees your card number.
+                </p>
+              </div>
+            </div>
+
+            <div class="pay-panel" id="payPanelCrypto" role="region" aria-live="polite">
+              <div class="pay-secure pay-secure--crypto">
+                <div class="pay-secure__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-5l-4.5 2.5 4.5 2.5zm2 0 4.5-2.5-4.5-2.5v5zm0-7V7l4.5 2.5L13 11.5zM11 11.5 6.5 9 11 6.5V11.5z"/></svg>
+                </div>
+                <h3>Secure payment with Paymento</h3>
+                <p>
+                  After you confirm, you’ll get a crypto invoice (demo). Supported: BTC, ETH, and LTC.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <button type="submit" class="btn btn-primary btn-block checkout-submit" id="payBtn">
+          Pay <span id="payAmount"></span>
+        </button>
+      </form>
+
+      <aside class="checkout-summary" aria-labelledby="summary-heading">
+        <h2 id="summary-heading">Order summary</h2>
+        <ul class="checkout-lines" id="summaryLines"></ul>
+        <dl class="checkout-totals">
+          <div>
+            <dt>Subtotal</dt>
+            <dd id="sumSubtotal">€0,00</dd>
+          </div>
+          <div class="checkout-totals__grand">
+            <dt>Total</dt>
+            <dd id="sumTotal">€0,00</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </main>
+
+  <script src="store.js"></script>
+  <script src="checkout.js"></script>
+</body>
+</html>
